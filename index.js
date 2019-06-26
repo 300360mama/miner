@@ -63,10 +63,10 @@ function Miner(table, row, col, quantityMine) {
     this.setNumber = function() {
 
         let listTD = this.table.querySelectorAll('td');
+        let listTDLenght = listTD.length;
+        console.log(listTD);
 
-        let listTDLEnght = listTD.length;
-
-        for (let i = 0; i < listTDLEnght; i++) {
+        for (let i = 0; i < listTDLenght; i++) {
 
             let topLeftCell = i % this.col === 0 ? undefined : i - this.col - 1;
             let topCell = i - this.col;
@@ -80,36 +80,54 @@ function Miner(table, row, col, quantityMine) {
             if (!listTD[i].innerHTML) {
 
                 let counter = 0;
-                if (listTD[topLeftCell] !== undefined && listTD[topLeftCell].innerHTML === 'bomb') {
-                    counter++;
+
+                console.log(topLeftCell);
+
+                if (topLeftCell !== undefined && listTD.hasOwnProperty(topLeftCell)) {
+                    if (listTD[topLeftCell].innerHTML === '<span>bomb</span>') counter++;
                 }
 
-                if (listTD[topCell] !== undefined && listTD[topCell].innerHTML === 'bomb') {
-                    counter++;
+                if (topCell !== undefined && listTD.hasOwnProperty(topCell)) {
+                    if (listTD[topCell].innerHTML === '<span>bomb</span>') counter++;
                 }
-                if (listTD[topRightCell] !== undefined && listTD[topRightCell].innerHTML === 'bomb') {
-                    counter++;
+
+                if (topRightCell !== undefined && listTD.hasOwnProperty(topRightCell)) {
+                    if (listTD[topRightCell].innerHTML === '<span>bomb</span>') counter++;
                 }
-                if (listTD[rightCell] !== undefined && listTD[rightCell].innerHTML === 'bomb') {
-                    counter++;
+
+                if (rightCell !== undefined && listTD.hasOwnProperty(rightCell)) {
+
+                    if (listTD[rightCell].innerHTML === '<span>bomb</span>') counter++;
                 }
-                if (listTD[bottomRightCell] !== undefined && listTD[bottomRightCell].innerHTML === 'bomb') {
-                    counter++;
+
+                if (bottomRightCell !== undefined && listTD.hasOwnProperty(bottomRightCell)) {
+                    if (listTD[bottomRightCell].innerHTML === '<span>bomb</span>') counter++;
                 }
-                if (listTD[bottomCell] !== undefined && listTD[bottomCell].innerHTML === 'bomb') {
-                    counter++;
+
+                if (bottomCell !== undefined && listTD.hasOwnProperty(bottomCell)) {
+                    if (listTD[bottomCell].innerHTML === '<span>bomb</span>') counter++;
                 }
-                if (listTD[bottomLeftCell] !== undefined && listTD[bottomLeftCell].innerHTML === 'bomb') {
-                    counter++;
+
+                if (bottomLeftCell !== undefined && listTD.hasOwnProperty(bottomLeftCell)) {
+                    if (listTD[bottomLeftCell].innerHTML === '<span>bomb</span>') counter++;
                 }
-                if (listTD[leftCell] !== undefined && listTD[leftCell].innerHTML === 'bomb') {
-                    counter++;
+
+                if (leftCell !== undefined && listTD.hasOwnProperty(leftCell)) {
+                    if (listTD[leftCell].innerHTML === '<span>bomb</span>') counter++;
                 }
+
 
                 listTD[i].classList.add('green');
                 listTD[i].innerHTML = `<span>${counter}</span>`;
             }
         }
+
+    }
+
+    this.isEmptyCell = function(cell) {
+
+        let number = cell.querySelector('span').innerHTML;
+        console.log(number);
 
     }
 
@@ -124,7 +142,7 @@ function FindMine() {
 
 }
 let table = document.getElementById('field');
-let miner = new Miner(table, 30, 16, 99);
+let miner = new Miner(table, 10, 10, 40);
 miner.init();
 
 table.addEventListener("click", (e) => {
