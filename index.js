@@ -15,7 +15,9 @@ function Miner(table, row, col, quantityMine) {
 
             for (let j = 0; j < this.col; j++) {
                 let td = document.createElement('td');
-                td.classList.add('hide');
+                let span = document.createElement('span');
+                span.classList.add('hide');
+                td.appendChild(span);
                 tr.appendChild(td);
             }
 
@@ -64,7 +66,6 @@ function Miner(table, row, col, quantityMine) {
 
         let listTD = this.table.querySelectorAll('td');
         let listTDLenght = listTD.length;
-        console.log(listTD);
 
         for (let i = 0; i < listTDLenght; i++) {
 
@@ -80,8 +81,6 @@ function Miner(table, row, col, quantityMine) {
             if (!listTD[i].innerHTML) {
 
                 let counter = 0;
-
-                console.log(topLeftCell);
 
                 if (topLeftCell !== undefined && listTD.hasOwnProperty(topLeftCell)) {
                     if (listTD[topLeftCell].innerHTML === '<span>bomb</span>') counter++;
@@ -125,10 +124,9 @@ function Miner(table, row, col, quantityMine) {
     }
 
     this.isEmptyCell = function(cell) {
-
-        let number = cell.querySelector('span').innerHTML;
-        console.log(number);
-
+        let value = Number(cell.innerHTML);
+        console.log(Number(value));
+        return value === 0 || isNaN(value) ? false : true;
     }
 
     this.init = function() {
@@ -138,17 +136,18 @@ function Miner(table, row, col, quantityMine) {
     }
 }
 
-function FindMine() {
 
-}
 let table = document.getElementById('field');
 let miner = new Miner(table, 10, 10, 40);
 miner.init();
 
 table.addEventListener("click", (e) => {
     let target = e.target;
+    if (target.tagName != 'SPAN') return;
 
-    if (target.tagName != 'TD') return
+    if (target.innerHTML === 'bomb') {
+        target.classList.remove('hide')
+    }
+    let isEmpty = miner.isEmptyCell(target);
 
-    target.classList.remove('hide');
 });
